@@ -1,0 +1,71 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/">
+
+	<xs:annotation>
+		<xs:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format alignment="1" alignmentUnits="bits"
+				binaryNumberRep="binary" bitOrder="mostSignificantBitFirst"
+				byteOrder="littleEndian" encoding="UTF-8" escapeSchemeRef=""
+				fillByte="0" initiatedContent="no" initiator="" leadingSkip="0"
+				lengthKind="explicit" lengthUnits="bits" representation="binary"
+				separator="" sequenceKind="ordered" terminator="" textPadKind="none"
+				textOutputMinLength="1" trailingSkip="0" />
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:element name="localizer_deviation" dfdl:lengthKind="implicit">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:sequence dfdl:hiddenGroupRef="hiddenRawLabel" />
+				<xs:element name="label" type="xs:unsignedByte" dfdl:length="8">
+					<xs:annotation>
+						<xs:appinfo source="http://www.ogf.org/dfdl/">
+							<dfdl:element>
+								<dfdl:property name="inputValueCalc"> {
+									../rawLabel/bit1 +
+									../rawLabel/bit2*2 +
+									../rawLabel/bit3*4 +
+									10 * (../rawLabel/bit4
+									+
+									../rawLabel/bit5*2 +
+									../rawLabel/bit6*4) +
+									100 *
+									(../rawLabel/bit7 +
+									../rawLabel/bit8*2)
+									}
+								</dfdl:property>
+							</dfdl:element>
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:group name="hiddenRawLabel">
+		<xs:sequence>
+			<xs:element name="rawLabel" dfdl:lengthKind="explicit" dfdl:length="8">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="bit1" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+						<xs:element name="bit2" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+						<xs:element name="bit3" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+						<xs:element name="bit4" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+						<xs:element name="bit5" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+						<xs:element name="bit6" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+						<xs:element name="bit7" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+						<xs:element name="bit8" type="xs:unsignedInt"
+							dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+</xs:schema>

@@ -1,0 +1,33 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/">
+
+	<xs:annotation>
+		<xs:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format alignment="1" alignmentUnits="bits"
+				binaryNumberRep="binary" bitOrder="leastSignificantBitFirst"
+				byteOrder="littleEndian" encoding="UTF-8" escapeSchemeRef=""
+				fillByte="0" initiatedContent="no" initiator="" leadingSkip="0"
+				lengthKind="explicit" lengthUnits="bits" representation="binary"
+				separator="" sequenceKind="ordered" terminator="" textPadKind="none"
+				textOutputMinLength="1" trailingSkip="0" />
+			<dfdl:defineFormat name="label">
+				<dfdl:format bitOrder="leastSignificantBitFirst" />
+			</dfdl:defineFormat>
+
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:element name="localizer_deviation" dfdl:lengthKind="implicit">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="label" type="xs:unsignedByte"
+					dfdl:length="8" />
+				<xs:annotation>
+					<xs:appinfo source="http://www.ogf.org/dfdl/">
+						<dfdl:element ref="labelFormat" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
