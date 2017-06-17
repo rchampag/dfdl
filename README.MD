@@ -9,10 +9,12 @@ Two messages related to the ARINC 710-10 specification for an Instrument Landing
 
 In each case, two files are supplied:
 
-  1. a DFDL schema;
-  2. a binary file containing the example message from the ARINC 710-10 specification.
+  1. a DFDL schema (extension `.dfdl.xsd`);
+  2. a binary file containing the example message from the ARINC 710-10 specification (extension `.bin`).
   
-The DFDL schema for both messages were tested using the daffodil tool, version 2.0. Paring (transforming the binary message to an XML infoset) works well, but unparsing (transforming of an XML infoset to a binary file) works only partially, as we have not found a proper way to unparse the label (least significant byte in both messages). We currently return a value of 0x00 for the label when unparsing both messages.
+The DFDL schema for both messages were tested using the [daffodil tool](https://opensource.ncsa.illinois.edu/confluence/display/DFDL/Getting+Daffodil), version 2.0.
+  * Parsing (transforming the binary message to an XML infoset) works well.
+  * Unparsing (transforming of an XML infoset to a binary file) works only partially, as we have not found a proper way to unparse the label (least significant byte in both messages). We currently return a value of 0x00 for the label when unparsing both messages.
 
 ## Localizer deviation message
 
