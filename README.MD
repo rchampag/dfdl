@@ -31,8 +31,3 @@ To parse the glide slope deviation message, run the following command:
   
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
-
-
-  
-  
-    

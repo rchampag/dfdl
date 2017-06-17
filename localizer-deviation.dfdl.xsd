@@ -13,7 +13,9 @@
       <dfdl:defineFormat name="label">
         <dfdl:format bitOrder="leastSignificantBitFirst" />
       </dfdl:defineFormat>
-      <dfdl:defineVariable name="range" type="xs:double">0.4</dfdl:defineVariable>
+      <dfdl:defineVariable name="data-range-float" type="xs:double">0.4</dfdl:defineVariable>
+      <!-- data-range-int: 2^number_of_data_bits (without sign) -->
+      <dfdl:defineVariable name="data-range-int" type="xs:unsignedInt">4096</dfdl:defineVariable>
     </xs:appinfo>
   </xs:annotation>
  
@@ -24,7 +26,7 @@
         <xs:element name="statusMatrix" type="xs:unsignedInt" dfdl:length="2"/>
         <xs:sequence dfdl:hiddenGroupRef="hiddenRawData"/>
         <xs:element name="data" type="xs:double" dfdl:length="13"
-          dfdl:inputValueCalc="{ ../rawData * $range div 4096.0  }"/>
+          dfdl:inputValueCalc="{ ../rawData * $data-range-float div $data-range-int  }"/>
         <xs:element name="padding" type="xs:unsignedInt" dfdl:length="5"/>
         <xs:element name="control" type="xs:unsignedInt" dfdl:length="1"/>
         <xs:element name="sdi" type="xs:unsignedInt" dfdl:length="2" />
@@ -41,7 +43,7 @@
   <xs:group name="hiddenRawData">
     <xs:sequence>
       <xs:element name="rawData" type="xs:int" dfdl:length="13"
-        dfdl:outputValueCalc="{ ../data div $range * 4096.0 }" />
+        dfdl:outputValueCalc="{ ../data div $data-range-float * $data-range-int }" />
     </xs:sequence>
   </xs:group>
  
