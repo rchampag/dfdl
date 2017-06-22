@@ -19,7 +19,7 @@
     </xs:appinfo>
   </xs:annotation>
  
-  <xs:element name="localizer_deviation" dfdl:lengthKind="implicit">
+  <xs:element name="glide_slope_deviation" dfdl:lengthKind="implicit">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="parity" type="xs:unsignedInt" dfdl:length="1"/>
