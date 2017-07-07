@@ -20,7 +20,7 @@ The DFDL schema for both messages were tested using the [daffodil tool](https://
 
 The following image details the structure of this message for an example deviation of +0.021 DDM (source: ARINC 710-10):
 
-![localizer-deviation message structure](https://github.com/rchampag/dfdl/blob/master/localizer-deviation.png)
+![localizer-deviation message structure](https://github.com/rchampag/dfdl/blob/master/arinc429-ils/localizer-deviation.png)
 
 Bit 29 (part of the `SSM` field in image above) is actually the sign of the data, and is included as bit 13 of the `data` field (12 bits long in image above) in the DFDL schema.
 
@@ -54,7 +54,7 @@ Because of the label unparsing problem mentioned above, the 8 least significant 
 
 The following image details the structure of this message for an example deviation of -0.125 DDM (source: ARINC 710-10):
 
-![glide-slope-deviation message structure](https://github.com/rchampag/dfdl/blob/master/glide-slope-deviation.png)
+![glide-slope-deviation message structure](https://github.com/rchampag/dfdl/blob/master/arinc429-ils/glide-slope-deviation.png)
 
 Bit 29 (part of the `SSM` field in image above) is actually the sign of the data, and is included as bit 13 of the `data` field (12 bits long in image above) in the DFDL schema.
 
