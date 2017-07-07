@@ -83,7 +83,3 @@ To unparse the resulting XML infoset back to a binary file, run the following co
 `daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
 
 Because of the label unparsing problem mentioned above, the 8 least significant bits are unparsed to zero, and we get a hex value of `FD800000` instead of the expected original value, `FD80003E`.
-
-## Attempts to unparse the label field alone
-
-All files `localizer-deviation-label?.dfdl.xsd` are attempts to unparse the label field alone.
