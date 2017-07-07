@@ -14,7 +14,7 @@ In each case, two files are supplied:
   
 The DFDL schema for both messages were tested using the [daffodil tool](https://opensource.ncsa.illinois.edu/confluence/display/DFDL/Getting+Daffodil), version 2.0.
   * Parsing (transforming the binary message to an XML infoset) works well.
-  * Unparsing (transforming of an XML infoset to a binary file) works only partially, as we have not found a proper way to unparse the label (least significant byte in both messages). We currently return a value of 0x00 for the label when unparsing both messages.
+  * Unparsing (transforming an XML infoset to a binary file) works only partially, as we have not found a proper way to unparse the label (least significant byte in both messages). We currently return a value of 0x00 for the label when unparsing both messages.
 
 ## Localizer deviation message
 
