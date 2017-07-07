@@ -22,6 +22,8 @@ The following image details the structure of this message for an example deviati
 
 ![localizer-deviation message structure](https://github.com/rchampag/dfdl/blob/master/localizer-deviation.png)
 
+Bit 29 (part of the `SSM` field in image above) is actually the sign of the data, and is included as bit 13 of the `data` field (12 bits long in image above) in the DFDL schema.
+
 Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `E0D800DE`
 
 To parse the localizer deviation message, run the following command in a command prompt where the daffodil executable is on the path:
@@ -41,8 +43,6 @@ The above operation should yield the following `localizer-deviation.xml`:
 </localizer_deviation>
 ```
 
-In the XML above, bit 29 is actually the sign of the data, and is excluded from `statusMatrix` field and included as bit 13 of the `data` field in the DFDL schema. This is why the `statusMatrix` field has a value of 3.
-
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation2.bin localizer-deviation.xml`
 
@@ -53,6 +53,8 @@ Because of the label unparsing problem mentioned above, the 8 least significant 
 The following image details the structure of this message for an example deviation of -0.125 DDM (source: ARINC 710-10):
 
 ![glide-slope-deviation message structure](https://github.com/rchampag/dfdl/blob/master/glide-slope-deviation.png)
+
+Bit 29 (part of the `SSM` field in image above) is actually the sign of the data, and is included as bit 13 of the `data` field (12 bits long in image above) in the DFDL schema.
 
 Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `FD80003E`
 
@@ -72,8 +74,6 @@ The above operation should yield the following `glide-slope-deviation.xml`:
   <label>174</label>
 </glide_slope_deviation>
 ```
-
-In the XML above, bit 29 is actually the sign of the data, and is excluded from `statusMatrix` field and included as bit 13 of the `data` field in the DFDL schema. This is why the `statusMatrix` field has a value of 3.
 
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
