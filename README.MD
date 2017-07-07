@@ -19,11 +19,28 @@ The DFDL schema for both messages were tested using the [daffodil tool](https://
 ## Localizer deviation message
 
 The following image details the structure of this message (source: ARINC 710-10):
+
 ![localizer-deviation message structure](https://github.com/rchampag/dfdl/blob/master/localizer-deviation.png)
+
+Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `E0D800DE`
 
 To parse the localizer deviation message, run the following command in a command prompt where the daffodil executable is on the path:
   * `daffodil parse -s localizer-deviation.dfdl.xsd -o localizer-deviation.xml localizer-deviation.bin`
-  
+
+The above operation should yield the following `localizer-deviation.xml`:
+
+```xml
+<localizer_deviation>
+  <parity>1</parity>
+  <statusMatrix>3</statusMatrix>
+  <data>0.02109375</data>
+  <padding>0</padding>
+  <control>0</control>
+  <sdi>0</sdi>
+  <label>173</label>
+</localizer_deviation>
+```
+
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation2.bin localizer-deviation.xml`
   
