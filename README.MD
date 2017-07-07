@@ -41,6 +41,8 @@ The above operation should yield the following `localizer-deviation.xml`:
 </localizer_deviation>
 ```
 
+In the XML above, bit 29 is actually the sign of the data, and is excluded from `statusMatrix` field and included as bit 13 of the `data` field in the DFDL schema. This is why the `statusMatrix` field has a value of 3.
+
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation2.bin localizer-deviation.xml`
 
@@ -70,6 +72,8 @@ The above operation should yield the following `glide-slope-deviation.xml`:
   <label>174</label>
 </glide_slope_deviation>
 ```
+
+In the XML above, bit 29 is actually the sign of the data, and is excluded from `statusMatrix` field and included as bit 13 of the `data` field in the DFDL schema. This is why the `statusMatrix` field has a value of 3.
 
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
