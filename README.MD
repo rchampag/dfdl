@@ -18,7 +18,7 @@ The DFDL schema for both messages were tested using the [daffodil tool](https://
 
 ## Localizer deviation message
 
-The following image details the structure of this message (source: ARINC 710-10):
+The following image details the structure of this message for an example devaition of +0.021 DDM (source: ARINC 710-10):
 
 ![localizer-deviation message structure](https://github.com/rchampag/dfdl/blob/master/localizer-deviation.png)
 
@@ -43,14 +43,38 @@ The above operation should yield the following `localizer-deviation.xml`:
 
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation2.bin localizer-deviation.xml`
-  
+
+Because of the label unparsing problem mentionned above, the 8 least significant bits ar eunparsed to zero, and we get a hex value of `E0D80000` instead of the expected original value, `E0D800DE`.
+
 ## Glide slope deviation message
+
+The following image details the structure of this message for an example devaition of -0.125 DDM (source: ARINC 710-10):
+
+![glide-slope-deviation message structure](https://github.com/rchampag/dfdl/blob/master/glide-slope-deviation.png)
+
+Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `FD80003E`
 
 To parse the glide slope deviation message, run the following command:
   * `daffodil parse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation.xml glide-slope-deviation.bin`
-  
+
+The above operation should yield the following `glide-slope-deviation.xml`:
+
+```xml
+<glide_slope_deviation>
+  <parity>1</parity>
+  <statusMatrix>3</statusMatrix>
+  <data>-0.125</data>
+  <padding>0</padding>
+  <control>0</control>
+  <sdi>0</sdi>
+  <label>174</label>
+</glide_slope_deviation>
+```
+
 To unparse the resulting XML infoset back to a binary file, run the following command:
   * `daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
+
+Because of the label unparsing problem mentionned above, the 8 least significant bits ar eunparsed to zero, and we get a hex value of `FD800000` instead of the expected origibal value, `FD80003E`.
 
 ## Attempts to unparse the label field alone
 
