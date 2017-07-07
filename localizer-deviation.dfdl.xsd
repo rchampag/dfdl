@@ -2,6 +2,11 @@
   xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/">
  
   <xs:annotation>
+  <!--
+      This section contains default values for all parameters used in the schema.
+      DFDL does not have default values for any parameter. Therefore, such default
+      values must be explicitly defined somewhere.
+  -->
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format alignment="1" alignmentUnits="bits"
         binaryNumberRep="binary" bitOrder="mostSignificantBitFirst"
@@ -10,26 +15,53 @@
         lengthUnits="bits" representation="binary" separator=""
         sequenceKind="ordered" terminator="" textOutputMinLength="1"
         textPadKind="none" trailingSkip="0" />
+  <!--
+      This section defines a named format which can be referred to elsewhere in the schema.
+  -->
       <dfdl:defineFormat name="label">
         <dfdl:format bitOrder="leastSignificantBitFirst" />
       </dfdl:defineFormat>
+  <!--
+      This section defines variables which can be used elsewhere in the schema.
+  -->
       <dfdl:defineVariable name="data-range-float" type="xs:double">0.4</dfdl:defineVariable>
       <!-- data-range-int: 2^number_of_data_bits (without sign) -->
       <dfdl:defineVariable name="data-range-int" type="xs:unsignedInt">4096</dfdl:defineVariable>
     </xs:appinfo>
   </xs:annotation>
  
+<!--
+    This section defines the structure of the data, in this case an order sequence of fields,
+    starting from the most significant bit (bit 32).
+-->
+
   <xs:element name="localizer_deviation" dfdl:lengthKind="implicit">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="parity" type="xs:unsignedInt" dfdl:length="1"/>
         <xs:element name="statusMatrix" type="xs:unsignedInt" dfdl:length="2"/>
+        <!--
+            This hidden group refers to details which will not appear in the parsed version
+            of the data. It was pointed to us as the proper way to handle non-trivial conversions
+            between the physical data (binary file in this case) and its representation
+            in the XML infoset.
+        -->
         <xs:sequence dfdl:hiddenGroupRef="hiddenRawData"/>
+        <!--
+            Parsing (conversion from physical data to logical representation) uses the following
+            pattern. The physical bits are interpreted as an unsigned int, whose range is
+            2^nb_bits. This value is then converted to floating point by multiplying by the
+            actual range of the data and dividing by the integer range.
+        -->
         <xs:element name="data" type="xs:double" dfdl:length="13"
           dfdl:inputValueCalc="{ ../rawData * $data-range-float div $data-range-int  }"/>
         <xs:element name="padding" type="xs:unsignedInt" dfdl:length="5"/>
         <xs:element name="control" type="xs:unsignedInt" dfdl:length="1"/>
         <xs:element name="sdi" type="xs:unsignedInt" dfdl:length="2" />
+        <!--
+            Same hidden group strategy as above to parse the label data in octal. 
+        -->
+        
         <xs:sequence dfdl:hiddenGroupRef="hiddenRawLabel" />
         <xs:element name="label" type="xs:unsignedInt" dfdl:length="8"
           dfdl:inputValueCalc="{
@@ -40,8 +72,13 @@
     </xs:complexType>
   </xs:element>
  
+  <!-- Hidden group definition, referred to above. --> 
   <xs:group name="hiddenRawData">
     <xs:sequence>
+      <!--
+          Unparsing (conversion from logical representation to physical) uses the same pattern
+          as parsing above, in reverse direction.      
+      -->
       <xs:element name="rawData" type="xs:int" dfdl:length="13"
         dfdl:outputValueCalc="{ ../data div $data-range-float * $data-range-int }" />
     </xs:sequence>
