@@ -19,7 +19,7 @@ The DFDL schema for both messages were tested using the [daffodil tool](https://
 ## Localizer deviation message
 
 The following image details the structure of this message (source: ARINC 710-10):
-![localizer-deviation message structure](https://github.com/rchampag/dfdl/localizer-deviation.png)
+![localizer-deviation message structure](https://github.com/rchampag/dfdl/blob/master/localizer-deviation.png)
 
 To parse the localizer deviation message, run the following command in a command prompt where the daffodil executable is on the path:
   * `daffodil parse -s localizer-deviation.dfdl.xsd -o localizer-deviation.xml localizer-deviation.bin`
