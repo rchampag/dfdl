@@ -24,10 +24,11 @@ The following image details the structure of this message for an example deviati
 
 Bit 29 (part of the `SSM` field in image above) is actually the sign of the data, and is included as bit 13 of the `data` field (12 bits long in image above) in the DFDL schema.
 
-Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `E0D800DE`
+Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `E0D800DE`. This is the value contained in the `localizer-deviation.bin` file.
 
 To parse the localizer deviation message, run the following command in a command prompt where the daffodil executable is on the path:
-  * `daffodil parse -s localizer-deviation.dfdl.xsd -o localizer-deviation.xml localizer-deviation.bin`
+
+`daffodil parse -s localizer-deviation.dfdl.xsd -o localizer-deviation.xml localizer-deviation.bin`
 
 The above operation should yield the following `localizer-deviation.xml`:
 
@@ -44,7 +45,8 @@ The above operation should yield the following `localizer-deviation.xml`:
 ```
 
 To unparse the resulting XML infoset back to a binary file, run the following command:
-  * `daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation2.bin localizer-deviation.xml`
+
+`daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation2.bin localizer-deviation.xml`
 
 Because of the label unparsing problem mentioned above, the 8 least significant bits are unparsed to zero, and we get a hex value of `E0D80000` instead of the expected original value, `E0D800DE`.
 
@@ -56,10 +58,11 @@ The following image details the structure of this message for an example deviati
 
 Bit 29 (part of the `SSM` field in image above) is actually the sign of the data, and is included as bit 13 of the `data` field (12 bits long in image above) in the DFDL schema.
 
-Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `FD80003E`
+Setting bit 11 and all padding bits to zero, this message yields the following 32 bit HEX value: `FD80003E`. This is the value contained in the `glide-slope-deviation.bin` file.
 
 To parse the glide slope deviation message, run the following command:
-  * `daffodil parse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation.xml glide-slope-deviation.bin`
+
+`daffodil parse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation.xml glide-slope-deviation.bin`
 
 The above operation should yield the following `glide-slope-deviation.xml`:
 
@@ -76,7 +79,8 @@ The above operation should yield the following `glide-slope-deviation.xml`:
 ```
 
 To unparse the resulting XML infoset back to a binary file, run the following command:
-  * `daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
+
+`daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
 
 Because of the label unparsing problem mentioned above, the 8 least significant bits are unparsed to zero, and we get a hex value of `FD800000` instead of the expected original value, `FD80003E`.
 
