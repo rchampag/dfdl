@@ -42,4 +42,4 @@ Changing the attribute `dfdl:bitOrder` in the schema from `"leastSignificantBitF
 
 To unparse the resulting XML infoset back to a binary file, run the following command:
 
-`daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation-label2.bin localizer-deviation-label.xml`
+`daffodil unparse -s localizer-deviation-label.dfdl.xsd -o localizer-deviation-label2.bin localizer-deviation-label.xml`
