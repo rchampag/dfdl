@@ -12,7 +12,7 @@
 		</xs:appinfo>
 	</xs:annotation>
 
-	<xs:element name="arinc429-message" dfdl:lengthKind="implicit">
+	<xs:element name="localizer-deviation" dfdl:lengthKind="implicit">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="label" type="xs:unsignedByte" dfdl:length="8"

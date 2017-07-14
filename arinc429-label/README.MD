@@ -9,7 +9,7 @@ Two main files are supplied:
   
 The DFDL schema was tested using the [daffodil tool](https://opensource.ncsa.illinois.edu/confluence/display/DFDL/Getting+Daffodil), version 2.0.
 
-We are currently unable to correctly parse the message as desired, because the birOrder attribute does not seem to be taken into account. The message is parsed, but the value obtained is incorrect.
+We are currently unable to correctly parse the message as desired, because the bitOrder attribute does not seem to be taken into account. The message is parsed, but the value obtained is incorrect.
 
 The decimal value of the label is encoded over 8 bits, which form the least significant byte of a 4-byte ARINC429 message. Only the label (one byte) is included in this example. The bit ordering of the label is reversed: the least significant bit of the label is bit 8, and the most significant bit of the label is bit 1. 
 
@@ -29,9 +29,9 @@ To parse the localizer deviation message, run the following command in a command
 The above operation should yield the following `localizer-deviation-label.xml`:
 
 ```xml
-<arinc429-message>
+<localizer-deviation>
   <label>123</label>
-</arinc429-message>
+</localizer-deviation>
 ```
 
 However, we currently obtain `<label>222</label>`, which corresponds to the value obtained if the least significant bit is considered bit 1 and the most significant bit considered is bit 8.
