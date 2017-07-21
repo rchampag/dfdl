@@ -9,18 +9,12 @@
   -->
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format alignment="1" alignmentUnits="bits"
-        binaryNumberRep="binary" bitOrder="mostSignificantBitFirst"
-        byteOrder="bigEndian" encoding="UTF-8" escapeSchemeRef="" fillByte="0"
+        binaryNumberRep="binary" bitOrder="leastSignificantBitFirst"
+        byteOrder="littleEndian" encoding="UTF-8" escapeSchemeRef="" fillByte="0"
         initiatedContent="no" initiator="" leadingSkip="0" lengthKind="explicit"
         lengthUnits="bits" representation="binary" separator=""
         sequenceKind="ordered" terminator="" textOutputMinLength="1"
         textPadKind="none" trailingSkip="0" />
-  <!--
-      This section defines a named format which can be referred to elsewhere in the schema.
-  -->
-      <dfdl:defineFormat name="label">
-        <dfdl:format bitOrder="leastSignificantBitFirst" />
-      </dfdl:defineFormat>
   <!--
       This section defines variables which can be used elsewhere in the schema.
   -->
@@ -38,30 +32,12 @@
   <xs:element name="localizer_deviation" dfdl:lengthKind="implicit">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="parity" type="xs:unsignedInt" dfdl:length="1"/>
-        <xs:element name="statusMatrix" type="xs:unsignedInt" dfdl:length="2"/>
         <!--
             This hidden group refers to details which will not appear in the parsed version
             of the data. It was pointed to us as the proper way to handle non-trivial conversions
             between the physical data (binary file in this case) and its representation
             in the XML infoset.
         -->
-        <xs:sequence dfdl:hiddenGroupRef="hiddenRawData"/>
-        <!--
-            Parsing (conversion from physical data to logical representation) uses the following
-            pattern. The physical bits are interpreted as an unsigned int, whose range is
-            2^nb_bits. This value is then converted to floating point by multiplying by the
-            actual range of the data and dividing by the integer range.
-        -->
-        <xs:element name="data" type="xs:double" dfdl:length="13"
-          dfdl:inputValueCalc="{ ../rawData * $data-range-float div $data-range-int  }"/>
-        <xs:element name="padding" type="xs:unsignedInt" dfdl:length="5"/>
-        <xs:element name="control" type="xs:unsignedInt" dfdl:length="1"/>
-        <xs:element name="sdi" type="xs:unsignedInt" dfdl:length="2" />
-        <!--
-            Same hidden group strategy as above to parse the label data in octal. 
-        -->
-        
         <xs:sequence dfdl:hiddenGroupRef="hiddenRawLabel" />
         <xs:element name="label" type="xs:unsignedInt" dfdl:length="8"
           dfdl:inputValueCalc="{
@@ -73,22 +49,28 @@
                   ../rawLabel/bit6*32 +
                   ../rawLabel/bit7*64 +
                    ../rawLabel/bit8*128 }"/>
+        <xs:element name="sdi" type="xs:unsignedInt" dfdl:length="2" />
+        <xs:element name="control" type="xs:unsignedInt" dfdl:length="1"/>
+        <xs:element name="padding" type="xs:unsignedInt" dfdl:length="5"/>
+        <!--
+            Same hidden group strategy as above to parse the label data in octal. 
+        -->
+        <xs:sequence dfdl:hiddenGroupRef="hiddenRawData"/>
+        <!--
+            Parsing (conversion from physical data to logical representation) uses the following
+            pattern. The physical bits are interpreted as an unsigned int, whose range is
+            2^nb_bits. This value is then converted to floating point by multiplying by the
+            actual range of the data and dividing by the integer range.
+        -->
+        <xs:element name="data" type="xs:double" dfdl:length="13"
+          dfdl:inputValueCalc="{ ../rawData * $data-range-float div $data-range-int  }"/>
+        <xs:element name="statusMatrix" type="xs:unsignedInt" dfdl:length="2"/>
+        <xs:element name="parity" type="xs:unsignedInt" dfdl:length="1"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
  
   <!-- Hidden group definition, referred to above. --> 
-  <xs:group name="hiddenRawData">
-    <xs:sequence>
-      <!--
-          Unparsing (conversion from logical representation to physical) uses the same pattern
-          as parsing above, in reverse direction.      
-      -->
-      <xs:element name="rawData" type="xs:int" dfdl:length="13"
-        dfdl:outputValueCalc="{ ../data div $data-range-float * $data-range-int }" />
-    </xs:sequence>
-  </xs:group>
- 
   <xs:group name="hiddenRawLabel">
     <xs:sequence>
       <xs:element name="rawLabel" dfdl:lengthKind="explicit" dfdl:length="8">
@@ -99,25 +81,37 @@
               Unparse yields label=0x00.
               Can't find a way to do this properly.
               -->
-            <xs:element name="bit1" type="xs:unsignedInt"
-              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
-            <xs:element name="bit2" type="xs:unsignedInt"
-              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
-            <xs:element name="bit3" type="xs:unsignedInt"
-              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
-            <xs:element name="bit4" type="xs:unsignedInt"
-              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
-            <xs:element name="bit5" type="xs:unsignedInt"
-              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
-            <xs:element name="bit6" type="xs:unsignedInt"
+            <xs:element name="bit8" type="xs:unsignedInt"
               dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
             <xs:element name="bit7" type="xs:unsignedInt"
               dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
-            <xs:element name="bit8" type="xs:unsignedInt"
+            <xs:element name="bit6" type="xs:unsignedInt"
+              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+            <xs:element name="bit5" type="xs:unsignedInt"
+              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+            <xs:element name="bit4" type="xs:unsignedInt"
+              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+            <xs:element name="bit3" type="xs:unsignedInt"
+              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+            <xs:element name="bit2" type="xs:unsignedInt"
+              dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
+            <xs:element name="bit1" type="xs:unsignedInt"
               dfdl:length="1" dfdl:outputValueCalc="{ 0 }" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <!-- Hidden group definition, referred to above. --> 
+  <xs:group name="hiddenRawData">
+    <xs:sequence>
+      <!--
+          Unparsing (conversion from logical representation to physical) uses the same pattern
+          as parsing above, in reverse direction.      
+      -->
+      <xs:element name="rawData" type="xs:int" dfdl:length="13"
+        dfdl:outputValueCalc="{ ../data div $data-range-float * $data-range-int }" />
     </xs:sequence>
   </xs:group>
 </xs:schema>
