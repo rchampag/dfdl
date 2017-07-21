@@ -4,8 +4,8 @@ This folder contains various files related to an effort to model ARINC429 messag
 
 Two messages related to the ARINC 710-10 specification for an Instrument Landing System (ILS) are modeled:
 
-  1. Localizer deviation (label 173 octal);
-  2. Glide slope deviation (label 174 octal).
+  1. Localizer deviation (label 173 octal, 123 decimal);
+  2. Glide slope deviation (label 174 octal, 124 decimal).
 
 In each case, two files are supplied:
 
@@ -40,7 +40,7 @@ The above operation should yield the following `localizer-deviation.xml`:
   <padding>0</padding>
   <control>0</control>
   <sdi>0</sdi>
-  <label>173</label>
+  <label>123</label>
 </localizer_deviation>
 ```
 
@@ -74,7 +74,7 @@ The above operation should yield the following `glide-slope-deviation.xml`:
   <padding>0</padding>
   <control>0</control>
   <sdi>0</sdi>
-  <label>174</label>
+  <label>124</label>
 </glide_slope_deviation>
 ```
 
