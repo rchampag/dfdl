@@ -12,9 +12,7 @@ In each case, two files are supplied:
   1. a DFDL schema (extension `.dfdl.xsd`);
   2. a binary file containing the example message from the ARINC 710-10 specification (extension `.bin`).
   
-The DFDL schema for both messages were tested using the [daffodil tool](https://opensource.ncsa.illinois.edu/confluence/display/DFDL/Getting+Daffodil), version 2.0.
-  * Parsing (transforming the binary message to an XML infoset) works well.
-  * Unparsing (transforming an XML infoset to a binary file) works only partially, as we have not found a proper way to unparse the label (least significant byte in both messages). We currently return a value of 0x00 for the label when unparsing both messages.
+The DFDL schema for both messages were tested using the [daffodil tool](https://opensource.ncsa.illinois.edu/confluence/display/DFDL/Getting+Daffodil), version 2.0. Parsing (transforming the binary message to an XML infoset) and unparsing (transforming an XML infoset to a binary file) both work well, but the label poses an interesting challenge as the dfdl attribute bitOrder does not work on full bytes, and parsing/unparsing in this situation requires using dfdl:inputValueCalc for bitwise parsing, and dfdl:outputValueCalc for bitwise unparsing.
 
 ## Localizer deviation message
 
@@ -48,7 +46,7 @@ To unparse the resulting XML infoset back to a binary file, run the following co
 
 `daffodil unparse -s localizer-deviation.dfdl.xsd -o localizer-deviation2.bin localizer-deviation.xml`
 
-Because of the label unparsing problem mentioned above, the 8 least significant bits are unparsed to zero, and we get a hex value of `0000D8E0` instead of the expected original value, `DE00D8E0`.
+The above operation should yield the value `DE00D8E0` in `localizer-deviation2.bin`.
 
 ## Glide slope deviation message
 
@@ -82,4 +80,4 @@ To unparse the resulting XML infoset back to a binary file, run the following co
 
 `daffodil unparse -s glide-slope-deviation.dfdl.xsd -o glide-slope-deviation2.bin glide-slope-deviation.xml`
 
-Because of the label unparsing problem mentioned above, the 8 least significant bits are unparsed to zero, and we get a hex value of `000080FD` instead of the expected original value, `3E0080FD`.
+The above operation should yield the value `3E0080FD` in `glide-slope-deviation2.bin`.
