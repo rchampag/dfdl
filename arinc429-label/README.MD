@@ -17,6 +17,7 @@ For example, the binary label value below corresponds to decimal value `123` (oc
 
 ```
 Bit no.   8 7 6 5 4 3 2 1
+--------------------------
 Value     1 1 0 1 1 1 1 0
 ```
 
